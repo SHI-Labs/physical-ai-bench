@@ -1,0 +1,39 @@
+[project]
+name = "paibench-reason"
+version = "1.0.0"
+description = "PAI Bench Reason: A Physical AI Benchmark for Video Reasoning"
+authors = [{name = "PAI Bench Contributors", email = "ziqi002@e.ntu.edu.sg"}]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "transformers",
+    "vllm",
+    "qwen-vl-utils",
+    "numpy",
+    "datasets",
+    "tqdm",
+    "torch",
+    "huggingface-hub",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+# Configure package discovery to include all packages
+[tool.setuptools.packages.find]
+include = ["*"]
+exclude = ["tests*"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+    "black",
+    "flake8",
+    "mypy",
+]

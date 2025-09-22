@@ -1,0 +1,64 @@
+[project]
+name = "paibench-transfer"
+version = "1.0.0"
+description = "PAI Bench Transfer: A Physical AI Benchmark for Transfer Learning"
+authors = [{name = "PAI Bench Contributors", email = "ziqi002@e.ntu.edu.sg"}]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "opencv-python-headless",
+    "torch",
+    "torchvision",
+    "loguru",
+    "decord",
+    "matplotlib",
+    "scipy",
+    "numpy",
+    "tqdm",
+    "timm",
+    "einops",
+    "scikit-video",
+    "transformers",
+    "hydra-core",
+    "attrs",
+    "pandas",
+    "psycopg2-binary",
+    "pyarrow",
+    "sqlalchemy",
+    "tenacity",
+    "databricks-sql-connector",
+    "cattrs",
+    "click",
+    "ray",
+    "pycocotools",
+    "imageio",
+    "webdataset",
+    "imageio-ffmpeg",
+    "lpips",
+    "easydict",
+    "xformers",
+    "scikit-image",
+    "typer",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+# Configure package discovery to include all packages
+[tool.setuptools.packages.find]
+include = ["*"]
+exclude = ["tests*"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+    "black",
+    "flake8",
+    "mypy",
+]

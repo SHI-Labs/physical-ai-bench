@@ -1,0 +1,64 @@
+[project]
+name = "pbench"
+version = "1.0.0"
+description = "PBench: A Physical AI Benchmark for World Models"
+authors = [{name = "PBench Contributors", email = "ziqi002@e.ntu.edu.sg"}]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "Pillow",
+    "numpy<2.0.0",
+    "matplotlib",
+    "timm>=0.9,<=1.0.12",
+    "wheel",
+    "cython",
+    "tensorboard",
+    "scipy",
+    "opencv-python-headless",
+    "scikit-learn",
+    "scikit-image",
+    "openai-clip",
+    "decord",
+    "requests",
+    "pyyaml",
+    "easydict",
+    "pyiqa",
+    "lvis",
+    "fairscale>=0.4.4",
+    "fvcore",
+    "urllib3",
+    "boto3",
+    "omegaconf",
+    "transformers",
+    "pycocoevalcap",
+    "torch",
+    "torchvision",
+    "qwen-vl-utils[decord]==0.0.8",
+    "vllm>=0.10.1",
+    "dreamsim",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+# only include the real package
+[tool.setuptools.packages.find]
+include = ["pbench", "pbench.*"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+    "black",
+    "flake8",
+    "mypy",
+]
+
+[project.scripts]
+evaluate = "evaluate:main"
+run_vqa_eval = "run_vqa_eval:main"
