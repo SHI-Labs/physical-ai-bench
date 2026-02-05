@@ -11,6 +11,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2512.01989-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2512.01989)
 ![Georgia Tech](https://img.shields.io/badge/Affiliation-Georgia%20Tech-ad9e66)
 ![CMU](https://img.shields.io/badge/Affiliation-CMU-c41230)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/SHI-Labs/physical-ai-bench)
 
 ## Introduction
 
