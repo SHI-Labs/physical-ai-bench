@@ -289,13 +289,16 @@ def resize_videos(tasks: list[Task], num_workers: int = 4) -> list[Task]:
 
 
 def dover_single_task(task: Task, dover_model) -> Task:
-    """Process single task with DOVER model"""
-    assert task.pred_resized_video_array is not None
-    assert task.gt_video_array is not None
-    assert task.fps
+    """Process single task with DOVER model.
 
-    video_buffer_pred = numpy_array_to_video_bytes(task.pred_resized_video_array, fps=task.fps)
-    video_buffer_gt = numpy_array_to_video_bytes(task.gt_video_array, fps=task.fps)
+    Read video bytes directly from the original files to avoid quality loss from
+    re-encoding the numpy array (imageio uses lossy H.264 by default, which
+    artificially lowers DOVER scores vs. the original high-quality source).
+    """
+    with open(task.pred_video_file, "rb") as f:
+        video_buffer_pred = f.read()
+    with open(task.gt_video_file, "rb") as f:
+        video_buffer_gt = f.read()
 
     results = dover_model([video_buffer_pred])
     task.dover_tech_score = float(results[0])

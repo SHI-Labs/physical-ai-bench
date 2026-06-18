@@ -154,7 +154,18 @@ class DOVERTechnical(nn.Module):
             self.model = None
 
     def get_technical_view(self, video_file: bytes) -> torch.Tensor:
-        video_data, _ = spatial_temporal_view_decomposition(video_file, self.sampler)
+        # Seed both RNGs before sampling so spatial patch jitter is deterministic,
+        # matching the imaginaire4 implementation. Save/restore global RNG state so
+        # we don't affect downstream callers.
+        torch_rng_state = torch.get_rng_state()
+        np_rng_state = np.random.get_state()
+        try:
+            torch.manual_seed(0)
+            np.random.seed(0)
+            video_data, _ = spatial_temporal_view_decomposition(video_file, self.sampler)
+        finally:
+            torch.set_rng_state(torch_rng_state)
+            np.random.set_state(np_rng_state)
         video_data = ((video_data.permute(1, 2, 3, 0) - self.mean) / self.std).permute(
             3, 0, 1, 2
         )
