@@ -225,7 +225,11 @@ def compute_depth_error_video_absrel(gt_video: np.ndarray, pred_video: np.ndarra
 
 
 def compute_depth_error_video_sirmse(
-    pred_depth: np.ndarray, gt_depth: np.ndarray, mask: Optional[np.ndarray] = None, compute_in_log_space: bool = False
+    pred_depth: np.ndarray,
+    gt_depth: np.ndarray,
+    mask: Optional[np.ndarray] = None,
+    compute_in_log_space: bool = False,
+    per_pixel_error_cap: Optional[float] = 10.0,
 ) -> Metric:
     """
     Compute depth estimation metrics between ground truth and predicted depth maps.
@@ -284,7 +288,10 @@ def compute_depth_error_video_sirmse(
             if not compute_in_log_space:
                 ratio = np.median(curr_gt) / np.median(curr_pred)
                 scaled_pred = curr_pred * ratio
-                frame_si_mse[t] = np.mean((curr_gt - scaled_pred) ** 2)
+                residual = curr_gt - scaled_pred
+                if per_pixel_error_cap is not None:
+                    residual = np.clip(residual, -per_pixel_error_cap, per_pixel_error_cap)
+                frame_si_mse[t] = np.mean(residual ** 2)
                 frame_si_rmse[t] = np.sqrt(frame_si_mse[t])
             else:
                 log_pred = np.log(curr_pred)
